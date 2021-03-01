@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sample</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        * {
+        text-align: left;
+        }
+
+        tr:nth-child(odd) {
+        background: GhostWhite;
+        }
+
+        td, th {
+        padding: 10px;
+        }
+
+        tr:nth-child(even) {
+        background: FloralWhite;
+        }
+
+        td.warn {
+        background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<p>Greetings !</p>
+<form th:action="${#httpServletRequest.requestURI}" method="post">
+    <input type="submit" value="Refresh page with max quantity" />
+    <input type="number" th:value="${max}" name="max" required/>
+</form>
+<div th:if="${ not#lists.isEmpty(samples)}">
+    <table>
+        <tr>
+            <th>Global Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Expire Date</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+        <tr th:each="sample : ${samples}">
+            <td th:text="${sample.globalId}"></td>
+            <td th:text="${sample.name}"></td>
+            <td th:text="${sample.description}" ></td>
+            <td th:class="${sample.cssClass != null ? sample.cssClass : ''}"
+                th:text="${#dates.format(sample.expiryDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="${sample.quantity != null ? sample.quantity.numericValue : 'N/A'}"></td>
+            <td>
+                <form th:action="@{/sampleinfo}">
+                    <input type="hidden" th:value="${sample.id}" name="sampleId" />
+                    <input type="submit" value="Detail" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

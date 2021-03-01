@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sample</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        * {
+        text-align: left;
+        }
+
+        tr:nth-child(odd) {
+        background: GhostWhite;
+        }
+
+        td, th {
+        padding: 10px;
+        }
+
+        tr:nth-child(even) {
+        background: FloralWhite;
+        }
+
+        td.warn {
+        background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<p th:text="'Sample name: ' + ${sample.name}" />
+<input action="action" type="button" onclick="history.go(-1);" value="Back"/>
+<div>
+    <table>
+        <tr>
+            <th>attribute</th>
+            <th>description</th>
+        </tr>
+        <tr>
+            <td>id</td>
+            <td th:text="${sample.id == null ? 'N/A' : sample.id}"></td>
+        </tr>
+        <tr>
+            <td>global id</td>
+            <td th:text="${sample.globalId == null ? 'N/A' : sample.globalId}"></td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td th:text="${sample.name == null ? 'N/A' : sample.name}"></td>
+        </tr>
+        <tr>
+            <td>description</td>
+            <td th:text="${sample.description == null ? 'N/A' : sample.description}"></td>
+        </tr>
+        <tr>
+            <td>created date</td>
+            <td th:text="${sample.created == null ? 'N/A' : #dates.format(sample.created, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        <tr>
+            <td>created by</td>
+            <td th:text="${sample.createdBy == null ? 'N/A' : sample.createdBy}"></td>
+        </tr>
+        <tr>
+            <td>last modified date</td>
+            <td th:text="${sample.lastModified == null ? 'N/A' : #dates.format(sample.lastModified, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        <tr>
+            <td>modified by</td>
+            <td th:text="${sample.modifiedBy == null ? 'N/A' : sample.modifiedBy}"></td>
+        </tr>
+        <tr>
+            <td>deleted indicator</td>
+            <td th:text="${sample.deleted == null ? 'N/A' : sample.deleted ? 'Yes' : 'No' }"></td>
+        </tr>
+        <tr>
+            <td>icon id</td>
+            <td th:text="${sample.iconId == null ? 'N/A' : sample.iconId}"></td>
+        </tr>
+        <tr>
+            <td>quantity</td>
+            <td th:text="${sample.quantity == null ? 'N/A' : sample.quantity.numericValue}"></td>
+        </tr>
+        <tr>
+            <td>tags</td>
+            <td th:text="${sample.tags == null ? 'N/A' : sample.tags}"></td>
+        </tr>
+        <tr>
+            <td>barcode</td>
+            <td th:text="${sample.barcode == null ? 'N/A' : sample.barcode}"></td>
+        </tr>
+        <tr>
+            <td>template id</td>
+            <td th:text="${sample.templateId == null ? 'N/A' : sample.templateId}"></td>
+        </tr>
+        <tr>
+            <td>owner</td>
+            <td th:text="${sample.owner == null ? 'N/A' : sample.owner.username}"></td>
+        </tr>
+        <tr>
+            <td>sub sample alias</td>
+            <td th:text="${sample.subSampleAlias == null ? 'N/A' : sample.subSampleAlias}"></td>
+        </tr>
+        <tr>
+            <td>storage temp Min</td>
+            <td th:text="${sample.storageTempMin != null ? sample.storageTempMin.numericValue : 'N/A'}"></td>
+        </tr>
+        <tr>
+            <td>storage temp max</td>
+            <td th:text="${sample.storageTempMax != null ? sample.storageTempMax.numericValue : 'N/A'}"></td>
+        </tr>
+        <tr>
+            <td>sample source</td>
+            <td th:text="${sample.sampleSource == null ? 'N/A' : sample.sampleSource}"></td>
+        </tr>
+        <tr>
+            <td>expiry date</td>
+            <td th:class="${sample.cssClass != null ? sample.cssClass : ''}"
+                th:text="${sample.expiryDate == null ? 'N/A' : #dates.format(sample.expiryDate, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        <tr th:if="${ not#lists.isEmpty(sample.fields)}">
+            <table>
+                <caption>Sample Field</caption>
+                <tr>
+                    <th>global id</th>
+                    <th>name</th>
+                    <th>lastModified</th>
+                    <th>type</th>
+                    <th>content</th>
+                </tr>
+                <tr th:each="field : ${sample.fields}">
+                    <td th:text="${field.globalId}"></td>
+                    <td th:text="${field.name}"></td>
+                    <td th:text="${field.lastModified == null ? 'N/A' : #dates.format(field.lastModified, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${field.type}"></td>
+                    <td th:text="${field.content}"></td>
+                </tr>
+            </table>
+        </tr>
+        <tr th:if="${ not#lists.isEmpty(sample.subSamples)}">
+            <table>
+                <caption>Sub Sample</caption>
+                <tr>
+                    <th>global id</th>
+                    <th>name</th>
+                    <th>container(s)</th>
+                </tr>
+                <tr th:each="subSample : ${sample.subSamples}">
+                    <td th:text="${subSample.globalId}"></td>
+                    <td th:text="${subSample.name}"></td>
+                    <td th:text="${subSample.containersName}"></td>
+                </tr>
+            </table>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>
